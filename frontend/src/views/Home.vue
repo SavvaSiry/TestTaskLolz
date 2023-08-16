@@ -1,19 +1,16 @@
 <template>
-
-
-  <div>
-    <post-card
+  <post-card
       v-for="post in posts"
       :key="post.id"
       :title="post.title"
       :description="post.description"
       @click="routePost(post.id)"
-    />
-  </div>
+  />
 </template>
 
 <script>
 import PostCard from "@/components/home/PostCard";
+
 export default {
   name: "HomePage",
   components: {PostCard},
