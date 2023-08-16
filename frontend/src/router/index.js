@@ -17,6 +17,21 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/posts/:id',
+        component: () => import('@/components/default/Default.vue'),
+        meta: {
+            title: 'Post',
+        },
+        children: [
+            {
+                path: '',
+                name: 'Post',
+                props: true,
+                component: () => import('@/views/Post'),
+            },
+        ],
+    },
 ]
 
 const router = createRouter({
