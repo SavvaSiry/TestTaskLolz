@@ -32,6 +32,20 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/admin',
+        component: () => import('@/components/default/Default.vue'),
+        meta: {
+            title: 'Admin',
+        },
+        children: [
+            {
+                path: '',
+                name: 'Admin',
+                component: () => import('@/views/Admin'),
+            },
+        ],
+    },
 ]
 
 const router = createRouter({
