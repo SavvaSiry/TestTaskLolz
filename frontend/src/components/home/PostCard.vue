@@ -25,13 +25,13 @@ export default {
 .post {
   border: 1px solid #ccc;
   padding: 10px;
-  margin: 10px;
+  margin-top: 15px;
   background-color: #f5f5f5;
   border-radius: 5px;
 
   .post-title {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
 
   .post-description {
