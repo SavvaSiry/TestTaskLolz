@@ -1,20 +1,40 @@
 package lolz.backend.service;
 
 import lolz.backend.entity.Post;
+import lolz.backend.entity.PostComment;
+import lolz.backend.repository.PostCommentRepository;
 import lolz.backend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
-    @Autowired
     private PostRepository postRepository;
+    private PostCommentRepository commentRepository;
 
+    public PostService(PostRepository postRepository, PostCommentRepository commentRepository) {
+        this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
+    }
+
+    //PostComments
+    public PostComment createComment(PostComment comment) {
+        return commentRepository.save(comment);
+    }
+
+    public List<PostComment> getCommentsByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
+    }
+
+    public void deleteCommentById(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
+
+    //Posts
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
@@ -35,6 +55,7 @@ public class PostService {
 
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
+        commentRepository.deleteByPostId(postId);
     }
 
     public Post getPostById(Long postId) {
