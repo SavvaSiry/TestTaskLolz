@@ -1,4 +1,8 @@
 <template>
+  <pagination-bar
+    @changeAmount="changeSize"
+    @changePage="changePage"
+  />
   <post-card
       v-for="post in posts"
       :key="post.id"
@@ -10,21 +14,41 @@
 
 <script>
 import PostCard from "@/components/home/PostCard";
+import {store} from "@/store";
+import PaginationBar from "@/components/home/PaginationBar";
 
 export default {
   name: "HomePage",
-  components: {PostCard},
+  components: {PaginationBar, PostCard},
   data() {
     return {
-      posts: [
-        {id: 0, description: "Эта статья о программировании", title: "О программировании"},
-        {id: 1, description: "Эта статья о крипте", title: "О крипте"}
-      ]
+      posts: [],
+      page: 0,
+      size: 2
     }
+  },
+  watch: {
+    page: 'updatePosts',
+    size: 'updatePosts'
+  },
+  async mounted() {
+    await this.updatePosts();
   },
   methods: {
     routePost(id) {
       this.$router.push(`/posts/${id}`)
+    },
+    changeSize(size) {
+      this.size = size
+      console.log(size)
+    },
+    changePage(page) {
+      this.page = page
+      console.log(page)
+    },
+    async updatePosts() {
+      await store.dispatch('getPosts', {page: this.page, size: this.size})
+      this.posts = store.getters.getPosts
     }
   }
 }

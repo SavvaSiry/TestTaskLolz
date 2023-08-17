@@ -10,27 +10,21 @@
 </template>
 
 <script>
+import {store} from "@/store";
+
 export default {
   name: "PostPage",
   props: {
-    id: Number
+    id: String,
   },
   data() {
     return {
-      post: {id: 0, title: "Title", text: "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" +
-            "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text", description: "Description"}
+      post: {id: 0, title: "Title", text: "Text text", description: "Description"}
     }
+  },
+  async mounted() {
+    await store.dispatch('getPostById', this.id)
+    this.post = store.getters.getPost
   }
 }
 </script>
@@ -50,28 +44,29 @@ export default {
   border-radius: 5px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 
-.post-id {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 10px;
-}
+  .post-id {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+  }
 
-.post-title {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
+  .post-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 
-.post-description {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 20px;
-}
+  .post-description {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
 
-.post-text {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
-}
+  .post-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+  }
 }
 </style>
