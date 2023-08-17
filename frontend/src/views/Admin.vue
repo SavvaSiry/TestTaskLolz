@@ -24,6 +24,7 @@
 import PostTable from "@/components/admin/PostTable";
 import PostForm from "@/components/admin/PostForm";
 import {store} from "@/store";
+
 export default {
   name: "AdminPage",
   components: {PostForm, PostTable},
@@ -34,6 +35,10 @@ export default {
       selectedPost: "",
       showForm: false,
     };
+  },
+  async mounted() {
+    await store.dispatch("getPosts", {page: 0, size: 10})
+    this.posts = store.getters.getPosts
   },
   methods: {
     editPost(post) {
@@ -55,8 +60,8 @@ export default {
       this.showForm = false
     },
     deletePost(post) {
+      store.dispatch('deletePostById', post)
       this.posts = this.posts.filter(post => post.id !== post.id);
-      console.log(`Deleted post ${post.id}`);
     },
   },
 }

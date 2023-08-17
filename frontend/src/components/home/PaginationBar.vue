@@ -2,12 +2,12 @@
   <div class="pagination-bar">
     <div class="pagination-controls">
       <button @click="goToPage(page - 1)" :disabled="page === 1">Previous</button>
-      <span>{{ page }} / {{ totalPages }}</span>
+      <span>{{ this.currentPage }} / {{ totalPages }}</span>
       <button @click="goToPage(page + 1)" :disabled="page === totalPages">Next</button>
     </div>
     <div class="pagination-options">
       <label for="perPage">Posts per page:</label>
-      <select v-model="amount" @change="updatePage">
+      <select v-model="editAmount" @change="updatePage">
         <option v-for="option in perPageOptions" :key="option" :value="option">{{ option }}</option>
       </select>
     </div>
@@ -15,14 +15,19 @@
 </template>
 
 <script>
+import {store} from "@/store";
+
 export default {
   name: "PaginationBar",
+  props: {
+    amount: Number,
+    currentPage: Number,
+  },
   data() {
     return {
       perPageOptions: [5, 10, 15],
-      amount: 5,
-      currentPage: 0,
       totalItems: Number,
+      editAmount: Number
     }
   },
   computed: {
@@ -33,9 +38,13 @@ export default {
       return Math.ceil(this.totalItems / this.amount);
     },
   },
+  async mounted() {
+    await store.dispatch('getPostsCount')
+    this.totalItems = store.getters.getPostsCount
+  },
   methods: {
     goToPage(newPage) {
-      if (newPage >= 1 && newPage <= this.totalPages) {
+      if (newPage > 1 && newPage <= this.totalPages) {
         this.$emit('changePage', newPage);
       }
     },
@@ -62,24 +71,24 @@ export default {
     display: flex;
     align-items: center;
 
-  button {
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
+    button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      cursor: pointer;
 
-  &:disabled {
-     opacity: 0.5;
-     cursor: not-allowed;
-   }
-  }
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
   }
 
   .pagination-options {
-      label {
-        margin-right: 5px;
-      }
+    label {
+      margin-right: 5px;
+    }
 
     select {
       padding: 5px;

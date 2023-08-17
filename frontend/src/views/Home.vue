@@ -2,6 +2,8 @@
   <pagination-bar
     @changeAmount="changeSize"
     @changePage="changePage"
+    :current-page="page"
+    :amount="size"
   />
   <post-card
       v-for="post in posts"
@@ -24,7 +26,7 @@ export default {
     return {
       posts: [],
       page: 0,
-      size: 2
+      size: 5
     }
   },
   watch: {
@@ -40,11 +42,10 @@ export default {
     },
     changeSize(size) {
       this.size = size
-      console.log(size)
     },
     changePage(page) {
-      this.page = page
       console.log(page)
+      this.page = page
     },
     async updatePosts() {
       await store.dispatch('getPosts', {page: this.page, size: this.size})

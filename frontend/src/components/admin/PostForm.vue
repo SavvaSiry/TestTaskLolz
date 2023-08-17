@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import {store} from "@/store";
+
 export default {
   name: "PostForm",
   props: {
@@ -38,7 +40,14 @@ export default {
   },
   methods: {
     submitForm() {
-      this.$emit('submit', this.post);
+      if (this.mode === 'add') {
+        store.dispatch("createPost", this.editPost)
+        this.$emit('close')
+      }
+      else {
+        store.dispatch("updatePostById", this.editPost)
+        this.$emit('close')
+      }
     },
   },
 };
