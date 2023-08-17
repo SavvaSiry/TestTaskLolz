@@ -10,17 +10,19 @@
 
 <script>
 import PostCard from "@/components/home/PostCard";
+import {store} from "@/store";
 
 export default {
   name: "HomePage",
   components: {PostCard},
   data() {
     return {
-      posts: [
-        {id: 0, description: "Эта статья о программировании", title: "О программировании"},
-        {id: 1, description: "Эта статья о крипте", title: "О крипте"}
-      ]
+      posts: []
     }
+  },
+  async mounted() {
+    await store.dispatch('getPosts', {page: 0, size: 10})
+    this.posts = store.getters.getPosts
   },
   methods: {
     routePost(id) {
