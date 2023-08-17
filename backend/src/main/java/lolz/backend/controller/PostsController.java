@@ -50,6 +50,11 @@ public class PostsController {
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getPosts() {
+        return ResponseEntity.ok(postService.getPostCount());
+    }
+
     @GetMapping("/{postId}")
     public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
