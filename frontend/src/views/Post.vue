@@ -1,4 +1,5 @@
 <template>
+  <h1>Post Page</h1>
   <div class="post-page">
     <div class="post-details">
       <div class="post-id">{{ id }}</div>
@@ -7,13 +8,20 @@
       <p class="post-text">{{ post.text }}</p>
     </div>
   </div>
+
+  <post-comments
+    :id="id"
+  />
+
 </template>
 
 <script>
 import {store} from "@/store";
+import PostComments from "@/components/post/PostComments";
 
 export default {
   name: "PostPage",
+  components: {PostComments},
   props: {
     id: String,
   },
