@@ -1,9 +1,10 @@
 <template>
+  <h1>Home Page</h1>
   <pagination-bar
-    @changeAmount="changeSize"
+    @changeSize="changeSize"
     @changePage="changePage"
-    :current-page="page"
-    :amount="size"
+    :page="page"
+    :size="size"
   />
   <post-card
       v-for="post in posts"
@@ -24,8 +25,21 @@ export default {
   components: {PaginationBar, PostCard},
   data() {
     return {
-      posts: [],
-      page: 0,
+      posts: [
+        {id: 0, text: "123", title: "123", description: "desc"},
+        {id: 2, text: "123", title: "123", description: "desc"},
+        {id: 3, text: "123", title: "123", description: "desc"},
+        {id: 4, text: "123", title: "123", description: "desc"},
+        {id: 5, text: "123", title: "123", description: "desc"},
+        {id: 7, text: "123", title: "123", description: "desc"},
+        {id: 6, text: "123", title: "123", description: "desc"},
+        {id: 8, text: "123", title: "123", description: "desc"},
+        {id: 99, text: "123", title: "123", description: "desc"},
+        {id: 11, text: "123", title: "123", description: "desc"},
+        {id: 22, text: "123", title: "123", description: "desc"},
+        {id: 33, text: "123", title: "123", description: "desc"},
+      ],
+      page: 1,
       size: 5
     }
   },
@@ -34,13 +48,14 @@ export default {
     size: 'updatePosts'
   },
   async mounted() {
-    await this.updatePosts();
+    // await this.updatePosts();
   },
   methods: {
     routePost(id) {
       this.$router.push(`/posts/${id}`)
     },
     changeSize(size) {
+      console.log(size)
       this.size = size
     },
     changePage(page) {

@@ -40,6 +40,7 @@ export const store = new Vuex.Store({
                 .then(response => ctx.commit('UPDATE_POST_COUNT', response.data))
                 .catch(error => console.log(error))
         },
+    //TODO: add method getComments
     },
     mutations: {
         UPDATE_POSTS(state, payload) {
@@ -56,16 +57,21 @@ export const store = new Vuex.Store({
         },
         UPDATE_POST_COUNT(state, payload) {
             this.state.postsCount = payload
-        }
+        },
+        UPDATE_COMMENTS(state, payload) {
+            this.state.comments = payload
+        },
     },
     state: {
         posts: [],
         post: {},
         postsCount: 0,
+        comments: []
     },
     getters: {
         getPosts: state => state.posts,
         getPost: state => state.post,
-        getPostsCount: state => state.postsCount
+        getPostsCount: state => state.postsCount,
+        getComments: state => state.comments,
     }
 })
