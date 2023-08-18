@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="id">Id: {{ id }}</div>
-    <div class="text">{{ text }}</div>
+    <div class="text">{{ comment }}</div>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: "CommentItem",
   props: {
     id: String,
-    text: String,
+    comment: String,
   }
 }
 </script>

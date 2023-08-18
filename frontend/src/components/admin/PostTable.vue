@@ -16,7 +16,6 @@
         <td>{{ post.description }}</td>
         <td>
           <button @click="editPost(post)">Edit Post</button>
-          <button @click="editComments(post)">Edit Comments</button>
           <button @click="deletePost(post)">Delete</button>
         </td>
       </tr>

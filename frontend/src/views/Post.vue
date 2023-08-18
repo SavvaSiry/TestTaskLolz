@@ -2,7 +2,6 @@
   <h1>Post Page</h1>
   <div class="post-page">
     <div class="post-details">
-      <div class="post-id">{{ id }}</div>
       <h1 class="post-title">{{ post.title }}</h1>
       <p class="post-description">{{ post.description }}</p>
       <p class="post-text">{{ post.text }}</p>
@@ -10,7 +9,7 @@
   </div>
 
   <post-comments
-    :id="id"
+      :id="this.id"
   />
 
 </template>
@@ -23,16 +22,19 @@ export default {
   name: "PostPage",
   components: {PostComments},
   props: {
-    id: String,
+    id: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      post: {id: 0, title: "Title", text: "Text text", description: "Description"}
+      post: {id: 0, title: "No post", text: "no", description: "no"}
     }
   },
   async mounted() {
-    await store.dispatch('getPostById', this.id)
-    this.post = store.getters.getPost
+    await store.dispatch("getPostById", this.id);
+    this.post = store.getters.getPost;
   }
 }
 </script>

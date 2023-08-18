@@ -11,7 +11,7 @@
           v-for="comment in comments"
           :key="comment.id"
           :id="comment.id"
-          :text="comment.text"
+          :comment="comment.comment"
       />
     </div>
 
@@ -19,9 +19,8 @@
 </template>
 
 <script>
-// import {store} from "@/store";
-
 import CommentItem from "@/components/post/CommentItem";
+import {store} from "@/store";
 
 export default {
   name: "PostComments",
@@ -35,23 +34,21 @@ export default {
   data() {
     return {
       comment: "",
-      comments: [
-        {id: 123, postId: 123, text: "Грозный коммент"},
-        {id: 23, postId: 123, text: "Грозный коммент"},
-        {id: 223, postId: 123, text: "Грозный коммент"},
-        {id: 333, postId: 123, text: "Грозный коммент"},
-        {id: 1223, postId: 123, text: "Грозный коммент"},
-      ]
+      comments: []
     }
   },
   async mounted() {
-    // await store.dispatch("getComments")
-    // this.comments = store.getters.getComments
+    await store.dispatch("getComments", this.id)
+    this.comments = store.getters.getComments
   },
   methods: {
-    addComment() {
-      this.comments.push(this.comment)
+    async addComment() {
+      await store.dispatch("createComment", {
+        comment: this.comment,
+        postId: this.id
+      })
       this.comment = ""
+      this.comments = store.getters.getComments
     }
   }
 }

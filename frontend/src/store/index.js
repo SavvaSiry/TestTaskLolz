@@ -10,8 +10,8 @@ export const store = new Vuex.Store({
                 .then(response => ctx.commit('UPDATE_POSTS', response.data))
                 .catch(error => console.log(error))
         },
-        async getPostById(ctx, props) {
-            await axiosClient.get(`/api/posts/${props.id}`)
+        async getPostById(ctx, id) {
+            await axiosClient.get(`/api/posts/${id}`)
                 .then(response => ctx.commit('UPDATE_POST', response.data))
                 .catch(error => console.log(error))
         },
@@ -40,7 +40,16 @@ export const store = new Vuex.Store({
                 .then(response => ctx.commit('UPDATE_POST_COUNT', response.data))
                 .catch(error => console.log(error))
         },
-    //TODO: add method getComments
+        async getComments(ctx, id) {
+            await axiosClient.get(`/api/comments/${id}`)
+                .then(response => ctx.commit('UPDATE_COMMENTS', response.data))
+                .catch(error => console.log(error))
+        },
+        async createComment(ctx, props) {
+            await axiosClient.post(`/api/comments`, props)
+                .then(response => ctx.commit('ADD_COMMENT', response.data))
+                .catch(error => console.log(error))
+        },
     },
     mutations: {
         UPDATE_POSTS(state, payload) {
@@ -56,11 +65,14 @@ export const store = new Vuex.Store({
             state.post = payload
         },
         UPDATE_POST_COUNT(state, payload) {
-            this.state.postsCount = payload
+            state.postsCount = payload
         },
         UPDATE_COMMENTS(state, payload) {
-            this.state.comments = payload
+            state.comments = payload
         },
+        ADD_COMMENT(state, payload) {
+            state.comments.push(payload)
+        }
     },
     state: {
         posts: [],

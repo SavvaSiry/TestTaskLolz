@@ -1,9 +1,9 @@
 <template>
   <div class="pagination-bar">
     <div class="pagination-controls">
-      <button @click="goToPage(page - 1)" :disabled="page === 1">Previous</button>
-      <span>{{ this.page }} / {{ totalPages }}</span>
-      <button @click="goToPage(page + 1)" :disabled="page === totalPages">Next</button>
+      <button @click="goToPage(page - 1)" :disabled="page === 0">Previous</button>
+      <span>{{ this.page }} / {{ totalPages - 1 }}</span>
+      <button @click="goToPage(page + 1)" :disabled="page === totalPages - 1">Next</button>
     </div>
     <div class="pagination-options">
       <label for="perPage">Posts per page:</label>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-// import {store} from "@/store";
+import {store} from "@/store";
 
 export default {
   name: "PaginationBar",
@@ -37,8 +37,8 @@ export default {
   },
   async mounted() {
     this.selectedSize = this.size
-    // await store.dispatch('getPostsCount')
-    // this.totalItems = store.getters.getPostsCount
+    await store.dispatch('getPostsCount')
+    this.totalItems = store.getters.getPostsCount
   },
   methods: {
     goToPage(newPage) {
@@ -46,13 +46,13 @@ export default {
       // 1 -> NO - YES
       // 2 -> YES - YES
       // 3 -> YES  - NO
-      if (newPage >= 1 && newPage <= this.totalPages) {
+      if (newPage >= 0 && newPage <= this.totalPages - 1) {
         this.$emit('changePage', newPage);
       }
     },
     updateSize() {
       this.$emit('changeSize', this.selectedSize);
-      this.$emit('changePage', 1);
+      this.$emit('changePage', 0);
     },
   },
 };

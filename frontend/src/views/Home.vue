@@ -39,7 +39,7 @@ export default {
         {id: 22, text: "123", title: "123", description: "desc"},
         {id: 33, text: "123", title: "123", description: "desc"},
       ],
-      page: 1,
+      page: 0,
       size: 5
     }
   },
@@ -48,7 +48,7 @@ export default {
     size: 'updatePosts'
   },
   async mounted() {
-    // await this.updatePosts();
+    await this.updatePosts();
   },
   methods: {
     routePost(id) {
